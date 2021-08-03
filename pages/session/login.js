@@ -6,9 +6,11 @@ import { useEffect } from 'react'
 
 export default function Login(){
     const {login, isLogged} = useUser()
+
     useEffect(()=> {
         if(isLogged) router.push('/')
     }, [isLogged])
+    
     const inputs = [{
         type: "text",
         placeholder: "Username...",

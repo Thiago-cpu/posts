@@ -1,35 +1,22 @@
 import styles from '../styles/Header.module.css'
 import MyLink from './MyLink'
 import useUser from '../hooks/useUser'
+import Link from 'next/link'
 
 export default function Header(){
-    const {isLogged, logout} = useUser()
-    const sessionHandler = () => {
-        if(isLogged){
-            return (
-            <>
-                <MyLink to='/myPosts'>myPosts</MyLink>
-                <a className={styles.pointer} onClick={logout}>logout</a>
-            </>
-            )
-        } else {
-            return (
-                <>
-                    <MyLink to='/session/login'>Login</MyLink>
-                    <MyLink to='/session/register'>Register</MyLink>
-                </>)
-        }
-    }
-
+    const {logout} = useUser()
     return (
         <header className={styles.headerContainer}>
+            {/* {createNavBar()} */}
             <nav className={styles.sitesContainer}>
-                <MyLink to="/">Home</MyLink>
+                    <MyLink to="/">Home</MyLink>
+                    <MyLink to='/myPosts' needLogged>myPosts</MyLink>
+                </nav>
+                <nav className={styles.userContainer}>
+                    <MyLink to='/session/login' needLogout >Login</MyLink>
+                    <MyLink to='/session/register' needLogout>Register</MyLink>
+                    <MyLink to='/' needLogged ><a onClick={logout}>logout</a></MyLink>
             </nav>
-            <nav className={styles.userContainer}>
-                {sessionHandler()}
-            </nav>
-
         </header>
     )
 }
