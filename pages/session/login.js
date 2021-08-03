@@ -21,7 +21,7 @@ export default function Login(){
         name: "password",
     }]
     const onSubmit = async ({username, password}) => {
-        login({username, password})
+        return await login({username, password})
     }
     return (
         <main className={styles.main}>

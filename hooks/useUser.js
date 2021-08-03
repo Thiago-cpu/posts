@@ -5,23 +5,25 @@ export default function useUser(){
     const {jwt, setJwt} = useContext(Context)
     
     const login = useCallback(async ({username, password}) => {
-        postFetch('/api/session/login',{username, password})
-        .then( res => {
-            if(!res.success || !res.data) return
-            window.localStorage.setItem('jwt', res.data)
-            setJwt(res.data)
-        })
-        .catch(e=>{
+        const {success, data} = await postFetch('/api/session/login',{username, password})
+        if(success && data){
+            window.localStorage.setItem('jwt', data)
+            setJwt(data)
+            console.log("se envio true")
+            return true
+        } else {
             window.localStorage.removeItem('jwt')
-            console.error(e)
-        })
+            return false
+        }
     },[setJwt])
 
     const register = useCallback(async ({username, password}) => {
-        const res = await postFetch('/api/session/register', {username, password})
-        if(res.success)return true
+        const {success} = await postFetch('/api/session/register', {username, password})
+        if(success) {
+            return await login({username, password})
+        }
         return false
-    },[])
+    },[login])
 
     const logout = useCallback(async ()=>{
         postFetch('/api/session/logout')

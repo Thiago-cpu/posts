@@ -1,10 +1,15 @@
 import styles from '../../styles/Register.module.css'
 import UserForm from '../../components/UserForm'
-import postFetch from '../../utils/postFetch'
+import { useEffect } from 'react'
 import router from 'next/router'
 import useUser from '../../hooks/useUser'
 export default function Register(){
-    const {register, verifyUser} = useUser()
+    const {register, verifyUser, isLogged} = useUser()
+
+    useEffect(()=> {
+        if(isLogged) router.push('/')
+    }, [isLogged])
+
     const onChange = async ({username}) =>{
         if(!username) return
         const isVerify = await verifyUser({username})
@@ -23,8 +28,7 @@ export default function Register(){
     }]
     const onSubmit = async ({username, password}) => {
         const isRegister = await register({username, password})
-        if(isRegister) return router.push('/session/login')
-        console.log("Ha ocurrido un error o el usuario ya existe")
+        if(!isRegister) return false 
     }
     return (
     <main className={styles.main}>

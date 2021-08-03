@@ -3,7 +3,7 @@ import db from "./db";
 
 export default nextConnect({
     onError(error, req, res){
-        res.status(501).json({success: false})
+        res.json({success: false})
     },
     onNoMatch(req, res){
         res.status(405).json({error: `${req.method} caca`})

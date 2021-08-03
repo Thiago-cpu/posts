@@ -1,11 +1,18 @@
 import styles from '../styles/UserForm.module.css'
 import {useState} from 'react'
+import Spinner from './Spinner'
 export default function UserForm({btnText = "Enviar", inputs, onSubmit}){
     const [inputValues, setInputValue] = useState({})
-    const handleSubmit = (e) =>{
+    const [dataForm, setDataForm] = useState({isLoading: false, error: false})
+    const handleSubmit = async (e) =>{
+        setDataForm({isLoading: true, error: false})
         e.preventDefault()
         if(!validateForm()) return alert("Llena el formulario antes de enviar")
-        if(onSubmit) return onSubmit(inputValues)
+        if(onSubmit ){ 
+            if(!await onSubmit(inputValues)){
+                setDataForm({isLoading: false, error: true})
+            }
+        }
         setInputValue({})
     }
     const validateForm = () =>{
@@ -33,7 +40,11 @@ return(
         <div className={styles.inputContainer}>
             {getInputs()}
         </div>
-        <button className={styles.submit} type="submit">{btnText}</button>
+        {dataForm.isLoading && !dataForm.error
+        ?<Spinner/>
+        :<button className={styles.submit} type="submit">{btnText}</button>
+        }
+        
     </form>
 )
 }
