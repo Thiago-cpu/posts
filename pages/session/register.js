@@ -11,10 +11,7 @@ export default function Register(){
     }, [isLogged])
 
     const onChange = async ({username}) =>{
-        if(!username) return
-        const isVerify = await verifyUser({username})
-        if(isVerify) return console.log("usuario válido")
-        console.log("usuario no válido")
+        return await verifyUser({username})
     }
     const inputs = [{
         type: "text",
@@ -27,8 +24,7 @@ export default function Register(){
         name: "password",
     }]
     const onSubmit = async ({username, password}) => {
-        const isRegister = await register({username, password})
-        if(!isRegister) return false 
+        return await register({username, password})
     }
     return (
     <main className={styles.main}>

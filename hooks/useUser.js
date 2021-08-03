@@ -36,9 +36,8 @@ export default function useUser(){
     },[setJwt])
 
     const verifyUser = useCallback(async ({username}) =>{
-        const res = await postFetch('/api/session/verifyUser', {username})
-        if(res.success) return true
-        return false
+        const {success} = await postFetch('/api/session/verifyUser', {username})
+        return success
     },[])
 
     return{
