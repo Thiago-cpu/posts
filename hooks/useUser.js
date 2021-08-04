@@ -24,13 +24,16 @@ export default function useUser(){
     const register = useCallback(({username, password}) => {
         return new Promise((resolve, reject)=>{
             postFetch('/api/session/register', {username, password})
-            .then(({success}) => {
+            .then(async ({success}) => {
                 if(success) {
-                    login({username, password})
+                    console.log("bien")
+                    await login({username, password})
                     resolve()
+                } else {
+                    reject()
                 }
             })
-            .catch(reject())
+            .catch(e => reject())
         })
 
     },[login])

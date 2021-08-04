@@ -71,13 +71,10 @@ export default function UserForm({btnText = "Enviar", inputs, onSubmit}){
     },[getInputStatus, handleChange, inputValues, isInputLoading])
 
     const spinnerOrBtn = useCallback(({isFormLoading, error}) => {
-
         if(isFormLoading && !error){
-            console.log("spinner time")
             return <Spinner size="60px" color="red"/>
         }else {    
-            console.log("button time")
-        return <button className={styles.submit} type="submit">{btnText}</button>
+            return <button className={styles.submit} type="submit">{btnText}</button>
         }
     },[btnText])
 
