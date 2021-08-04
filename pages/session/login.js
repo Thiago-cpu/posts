@@ -20,12 +20,10 @@ export default function Login(){
         placeholder: "Password...",
         name: "password",
     }]
-    const onSubmit = async ({username, password}) => {
-        return await login({username, password})
-    }
+    
     return (
         <main className={styles.main}>
-            <UserForm btnText="Login" inputs={inputs} onSubmit={onSubmit}/>
+            <UserForm btnText="Login" inputs={inputs} onSubmit={login}/>
         </main>
     )
 }

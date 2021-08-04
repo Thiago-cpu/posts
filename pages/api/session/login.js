@@ -11,9 +11,8 @@ export default handler.post("/api/session/login",async (req, res) => {
     if (!Usuario) throw new Error
     bcrypt.compare(password, Usuario.password)
     .then(function(result) {
-        console.log("apunto")
-        if(!result) return res.json({success: false})
-        console.log("hola")
+
+        if(!result) throw new Error
         const session = {id: Usuario._id, username: Usuario.username}
         const token = jwt.sign(session, process.env.TOKEN_SECRET, {expiresIn: '8h'})
         res.setHeader('Set-Cookie', cookie.serialize('jwt', token,{
@@ -23,7 +22,7 @@ export default handler.post("/api/session/login",async (req, res) => {
             maxAge: 60*60*8,
             path: '/'
         }))
-        return res.json({success: true, data: token})
+        return res.json({success: true})
     })
     .catch(e => {
         console.error(e)
