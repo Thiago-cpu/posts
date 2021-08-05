@@ -1,43 +1,44 @@
 import styles from '../styles/UserForm.module.css'
 import {useState, useCallback, useEffect} from 'react'
 import Spinner from './Spinner'
-import { FaCheck, FaCross } from 'react-icons/fa';
+import { FaCheck, FaCross, FaTimes } from 'react-icons/fa';
 export default function UserForm({btnText = "Enviar", inputs, onSubmit}){
     const [inputValues, setInputValue] = useState({})
     const [isInputLoading, setisInputLoading] = useState({})
-    const [dataForm, setDataForm] = useState({isFormLoading: false, error: false})
+    const [buttonState, setButtonState] = useState("default")
 
     const handleSubmit = async (e) =>{
         e.preventDefault()
 
-        if(!validateForm()) {
+        if(!validateForm(inputValues)) {
             return alert("Llena el formulario antes de enviar")
         }
 
         if(onSubmit ){ 
-            setDataForm({isFormLoading: true, error: false})
+            setButtonState("loading")
             onSubmit(inputValues)
             .then(res => {
-                setDataForm({isFormLoading: false, error: false})
+                setButtonState("success")
             })
             .catch (e => {
-                setDataForm({isFormLoading: false, error: true})
+                setButtonState("failure")
             })
         }
     }
 
-    const validateForm = () =>{
+    const validateForm = useCallback((inputValues) =>{
         for(let i = 0; i<inputs.length; i++){
             let name = inputs[i].name
             if(!inputValues[name]) return false 
         }
         return true
-    }
+    },[inputs])
 
     const handleChange = useCallback((e, onChange) =>{
         e.preventDefault()
         const {value, name} = e.target
         setInputValue({...inputValues, [name]: value})
+        if(buttonState === "failure") setButtonState("default")
         if(onChange) {
             setisInputLoading({...isInputLoading, [name]: {loading: true, success: false}})
             onChange({[name]:value})
@@ -48,7 +49,7 @@ export default function UserForm({btnText = "Enviar", inputs, onSubmit}){
                 setisInputLoading({...isInputLoading, [name]: {loading: false, success: false}})
             })
         }
-    },[inputValues, isInputLoading])
+    },[inputValues, isInputLoading, setButtonState, buttonState])
 
     const getInputStatus = useCallback(({loading, success}) =>{
         if(loading) return <Spinner size="30px" color="blue"/>
@@ -69,13 +70,17 @@ export default function UserForm({btnText = "Enviar", inputs, onSubmit}){
                     </div>)
         })
     },[getInputStatus, handleChange, inputValues, isInputLoading])
-
-    const spinnerOrBtn = useCallback(({isFormLoading, error}) => {
-        if(isFormLoading && !error){
-            return <Spinner size="60px" color="red"/>
-        }else {    
-            return <button className={styles.submit} type="submit">{btnText}</button>
-        }
+    
+    
+   
+    const getElementFor = useCallback(buttonState => {
+        const buttonStates = {
+            "loading": <Spinner size="3rem" color="red"/>,
+            "success": <FaCheck className={styles.icon} fill="green"/>,
+            "failure": <FaTimes className={styles.icon} fill="red" />,
+            "default": <button className={styles.submit} type="submit">{btnText}</button>
+        } 
+        return buttonStates[buttonState]
     },[btnText])
 
 return(
@@ -83,7 +88,7 @@ return(
         <div className={styles.inputContainer}>
             {getInputs(inputs)}
         </div>
-        {spinnerOrBtn(dataForm)}
+        {getElementFor(buttonState)}
         
     </form>
 )
