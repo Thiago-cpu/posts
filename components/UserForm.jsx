@@ -62,7 +62,7 @@ export default function UserForm({btnText = "Enviar", inputs, onSubmit}){
         return inputs.map((input, i) => {
             const {type, placeholder, name, onChange} = input
             return (<div className={styles.rowInput} key={i}>
-                        <input name={name} className={styles.input} value={inputValues[name]?inputValues[name]:""} type={type} onChange={(e)=>{handleChange(e, onChange)}} placeholder={placeholder}/>
+                        <input name={name} className={styles.input} value={inputValues[name] || ""} type={type} onChange={(e)=>{handleChange(e, onChange)}} placeholder={placeholder}/>
                         {isInputLoading[name]
                         ?getInputStatus(isInputLoading[name])
                         :null

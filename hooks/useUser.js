@@ -7,10 +7,9 @@ export default function useUser(){
     
     const login = useCallback(({username, password}) =>{
         return new Promise((resolve, reject)=>{
-            postFetch('/api/session/login',{username, password})
+            postFetch({url: '/api/session/login',params: {username, password}})
             .then(({success}) => {
                 if(success){
-                    console.log("hola")
                     window.localStorage.setItem('jwt', 'true')
                     setJwt(true)
                     resolve()
@@ -25,7 +24,7 @@ export default function useUser(){
 
     const register = useCallback(({username, password}) => {
         return new Promise((resolve, reject)=>{
-            postFetch('/api/session/register', {username, password})
+            postFetch({url: '/api/session/register', params: {username, password}})
             .then(async ({success}) => {
                 if(success) {
                     console.log("bien")
@@ -41,7 +40,7 @@ export default function useUser(){
     },[login])
 
     const logout = useCallback(async ()=>{
-        postFetch('/api/session/logout')
+        postFetch({url: '/api/session/logout'})
         .then(res => {
             if (!res.success) return
             setJwt(null)
@@ -51,7 +50,7 @@ export default function useUser(){
     },[setJwt])
 
     const verifyUser = useCallback(async ({username}) =>{
-        return postFetch('/api/session/verifyUser', {username})
+        return postFetch({url: '/api/session/verifyUser', params: {username}})
         .then(({success}) => {return success})
         .catch(e => {return false})
     },[])

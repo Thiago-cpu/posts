@@ -1,6 +1,6 @@
-export default async function postFetch(url, params){
+export default async function postFetch({url, params = undefined, method = 'POST'}){
     const res = await fetch(url,{
-        method: 'POST',
+        method,
         headers: {
             'Content-Type': 'application/json'
         },
