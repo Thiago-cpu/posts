@@ -7,7 +7,7 @@ export function UserContextProvider({children}){
     useEffect(()=>{
         setJwt(window.localStorage.getItem('jwt'))
     },[])
-
+    
     return <Context.Provider value={{jwt, setJwt}}>
         {children}
     </Context.Provider>

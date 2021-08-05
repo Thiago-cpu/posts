@@ -1,6 +1,7 @@
 import Context from "../context/UserContext"
 import postFetch from "../utils/postFetch"
 import { useCallback, useContext } from "react"
+
 export default function useUser(){
     const {jwt, setJwt} = useContext(Context)
     
@@ -9,7 +10,8 @@ export default function useUser(){
             postFetch('/api/session/login',{username, password})
             .then(({success}) => {
                 if(success){
-                    window.localStorage.setItem('jwt', true)
+                    console.log("hola")
+                    window.localStorage.setItem('jwt', 'true')
                     setJwt(true)
                     resolve()
                 } else {
