@@ -1,14 +1,12 @@
 import { useState, useEffect, useCallback, useReducer } from "react";
 function reducer(state, action) {
   switch (action.type) {
-    case 'alternLoading':
-      return {...state, isLoading: !state.isLoading};
-    case 'setError':
-      return {...state, error: action.payload};
-    case 'setData':
-      return {...state, data: action.payload}
-    case 'resetData':
-      return {...state, data: null, error: null}
+    case 'Loading':
+      return {data: null, error: null, isLoading: true};
+    case 'onError':
+      return {data: null, isLoading: false , error: action.payload};
+    case 'onData':
+      return {error: null, isLoading: false, data: action.payload}
     default:
       return state
   }
@@ -18,24 +16,18 @@ export default function useFetch({
   loadOnMount = false,
   fetchFn = null,
   params = null,
-  clearDataOnLoad = false,
 }) {
   const [state, dispatch] = useReducer(reducer, {data: null, error: null, isLoading: false});
   const loadData = useCallback(async () => {
-    dispatch({type: 'alternLoading'})
-    if (clearDataOnLoad) {
-      dispatch({type: 'resetData'})
-    };
+    dispatch({type: 'Loading'})
     fetchFn(params)
       .then(res => {
-        dispatch({type: 'setData', payload: res})
-        dispatch({type: 'alternLoading'})
+        dispatch({type: 'onData', payload: res})
       })
       .catch(err => {
-        dispatch({type: 'setError', payload: err})
-        dispatch({type: 'alternLoading'})
+        dispatch({type: 'onError', payload: err})
       })
-  }, [fetchFn, params, clearDataOnLoad])
+  }, [fetchFn, params])
 
   useEffect(() => {
     if (loadOnMount) loadData();
