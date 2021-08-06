@@ -2,28 +2,20 @@ import styles from '../styles/UserForm.module.css'
 import {useState, useCallback, useEffect} from 'react'
 import Spinner from './Spinner'
 import { FaCheck, FaCross, FaTimes } from 'react-icons/fa';
+import Loading from './Loading';
 export default function UserForm({btnText = "Enviar", inputs, onSubmit}){
     const [inputValues, setInputValue] = useState({})
     const [isInputLoading, setisInputLoading] = useState({})
-    const [buttonState, setButtonState] = useState("default")
-
+    const [clickButton, setClickButton] = useState(false)
+    
+    
+    
     const handleSubmit = async (e) =>{
         e.preventDefault()
-
         if(!validateForm(inputValues)) {
             return alert("Llena el formulario antes de enviar")
         }
-
-        if(onSubmit ){ 
-            setButtonState("loading")
-            onSubmit(inputValues)
-            .then(res => {
-                setButtonState("success")
-            })
-            .catch (e => {
-                setButtonState("failure")
-            })
-        }
+        setClickButton(true)
     }
 
     const validateForm = useCallback((inputValues) =>{
@@ -38,23 +30,13 @@ export default function UserForm({btnText = "Enviar", inputs, onSubmit}){
         e.preventDefault()
         const {value, name} = e.target
         setInputValue({...inputValues, [name]: value})
-        if(buttonState === "failure") setButtonState("default")
-        if(onChange) {
-            setisInputLoading({...isInputLoading, [name]: {loading: true, success: false}})
-            onChange({[name]:value})
-            .then(res=>{
-                
-                if(res) return setisInputLoading({...isInputLoading, [name]: {loading: false, success: true}})
-
-                setisInputLoading({...isInputLoading, [name]: {loading: false, success: false}})
-            })
-        }
-    },[inputValues, isInputLoading, setButtonState, buttonState])
+        if(clickButton === true) setClickButton(false)
+    },[inputValues, clickButton, setClickButton])
 
     const getInputStatus = useCallback(({loading, success}) =>{
         if(loading) return <Spinner size="30px" color="blue"/>
         if(success) return <FaCheck className={styles.icon} fill="green"/>
-        if(success === false) return <FaCross className={styles.icon} fill="red"/>
+        if(success === false) return <FaTimes className={styles.icon} fill="red"/>
         return null
     },[])
 
@@ -63,32 +45,17 @@ export default function UserForm({btnText = "Enviar", inputs, onSubmit}){
             const {type, placeholder, name, onChange} = input
             return (<div className={styles.rowInput} key={i}>
                         <input name={name} className={styles.input} value={inputValues[name] || ""} type={type} onChange={(e)=>{handleChange(e, onChange)}} placeholder={placeholder}/>
-                        {isInputLoading[name]
-                        ?getInputStatus(isInputLoading[name])
-                        :null
-                 }
+                        {inputValues[name] != "" && onChange && <Loading promise={onChange} params={{[name]: inputValues[name]}} clearDataOnLoad  spinnerSize = "2rem" spinnerColor = "orange"/>}
                     </div>)
         })
-    },[getInputStatus, handleChange, inputValues, isInputLoading])
-    
-    
-   
-    const getElementFor = useCallback(buttonState => {
-        const buttonStates = {
-            "loading": <Spinner size="3rem" color="red"/>,
-            "success": <FaCheck className={styles.icon} fill="green"/>,
-            "failure": <FaTimes className={styles.icon} fill="red" />,
-            "default": <button className={styles.submit} type="submit">{btnText}</button>
-        } 
-        return buttonStates[buttonState]
-    },[btnText])
+    },[ handleChange, inputValues])
 
 return(
     <form className={styles.formContainer} onSubmit={handleSubmit}>
         <div className={styles.inputContainer}>
             {getInputs(inputs)}
         </div>
-        {getElementFor(buttonState)}
+        {clickButton?<Loading promise={onSubmit} params={inputValues}/>:<button className={styles.submit} type="submit">{btnText}</button>}
         
     </form>
 )

@@ -1,12 +1,17 @@
 export default async function postFetch({url, params = undefined, method = 'POST'}){
-    const res = await fetch(url,{
-        method,
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(params)
-    })
-    const resJson = await res.json()
-    return resJson
-
+    return fetch(url,{
+            method,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params)
+        })
+        .then(res=>{
+            if(!res.ok) throw new Error
+            return res.json()
+        })
+        .then(res => {  
+            return res
+        })
+        .catch(e=>{throw new Error}) 
 }
