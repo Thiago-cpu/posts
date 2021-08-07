@@ -3,7 +3,6 @@ import {useState, useCallback, useEffect} from 'react'
 import Loading from './Loading';
 export default function UserForm({btnText = "Enviar", inputs, onSubmit}){
     const [inputValues, setInputValue] = useState({})
-    const [isInputLoading, setisInputLoading] = useState({})
     const [clickButton, setClickButton] = useState(false)
 
     const handleSubmit = async (e) =>{
@@ -45,7 +44,6 @@ return(
             {getInputs(inputs)}
         </div>
         {clickButton?<Loading promise={onSubmit} params={inputValues}/>:<button className={styles.submit} type="submit">{btnText}</button>}
-        
     </form>
 )   
 }   
