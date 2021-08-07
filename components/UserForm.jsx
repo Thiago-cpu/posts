@@ -34,7 +34,7 @@ export default function UserForm({btnText = "Enviar", inputs, onSubmit}){
             const {type, placeholder, name, onChange} = input
             return (<div className={styles.rowInput} key={i}>
                         <input name={name} className={styles.input} value={inputValues[name] || ""} type={type} onChange={(e)=>{handleChange(e, onChange)}} placeholder={placeholder}/>
-                        {inputValues[name] && onChange && <Loading promise={onChange} params={{[name]: inputValues[name]}} clearDataOnLoad  spinnerSize = "2rem" spinnerColor = "orange"/>}
+                        {inputValues[name] && onChange && <Loading promise={onChange} params={{[name]: inputValues[name]}} spinnerSize = "2rem" spinnerColor = "orange"/>}
                     </div>)
         })
     },[ handleChange, inputValues])
