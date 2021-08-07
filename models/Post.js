@@ -5,6 +5,10 @@ const postSchema = new mongoose.Schema({
     description: 'string',
     likes: Number,
     dislikes: Number,
+    publishedAt: {
+        type: Date,
+        default: () => new Date(),    
+    },
     userId: String,
 });
 

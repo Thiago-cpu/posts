@@ -1,2 +1,66 @@
 
+.main{
+    background-color: var(--main-bg-color);
+}
+.postContainer{
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1rem;
+    place-content: space-evenly;
 
+    
+}
+.post{
+    background-color: var(--font-color);
+    overflow-y: auto;
+    display: flex;
+    overflow-wrap: break-word;
+    flex-direction: column;
+    max-width: 300px;
+    max-height: 300px;
+    border: 3px solid #9da8c7;
+    border-radius: 15px;
+}
+.post > p{
+    overflow-y: scroll;
+}
+
+.postFooter{
+    display: flex;
+    justify-content: flex-end;
+}
+.postHeader{
+    display: flex;
+    justify-content: space-evenly;
+}
+.postHeader > .likes {
+    align-self: center;
+}
+.postHeader > .likes > p{
+    margin: 0px;
+    text-align: center;
+}
+.postHeader > .likes > svg{
+    width: 1.2em;
+    height: 1.2em;
+}
+.postHeader > .postPin {
+    width: 1.5em;
+    height: 1.5em;
+    margin-top: 10px;
+}
+.postHeader svg{
+    cursor: pointer
+}
+
+
+.post >p::-webkit-scrollbar, .w-toc__content::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+}
+.post >p::-webkit-scrollbar-thumb, .w-toc__content::-webkit-scrollbar-thumb {
+    background: #9aa0a6;
+    background-clip: padding-box;
+    border: 1.5px solid transparent;
+    border-radius: 3px;
+}

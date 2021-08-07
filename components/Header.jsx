@@ -1,7 +1,6 @@
 import styles from '../styles/Header.module.css'
 import MyLink from './MyLink'
 import useUser from '../hooks/useUser'
-import Link from 'next/link'
 
 export default function Header(){
     const {logout} = useUser()

@@ -17,3 +17,9 @@ a {
 * {
   box-sizing: border-box;
 }
+:root {
+  --header-bg-color: #2f5394;
+  --font-color: #dacaca;
+  --main-bg-color: steelblue;
+
+}
