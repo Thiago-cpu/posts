@@ -7,11 +7,11 @@ export default async function postFetch({url, params = undefined, method = 'POST
             body: JSON.stringify(params)
         })
         .then(res=>{
-            if(!res.ok) throw new Error
+            if(!res.ok) throw new Error('is not ok')
             return res.json()
         })
         .then(res => {  
             return res
         })
-        .catch(e=>{throw new Error}) 
+         
 }

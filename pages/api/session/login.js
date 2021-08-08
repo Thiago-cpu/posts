@@ -26,6 +26,6 @@ export default handler.post("/api/session/login",async (req, res) => {
     })
     .catch(e => {
         console.error(e)
-        res.status(401).json({success: false})
+        res.status(300).json({success: false})
     })
 })

@@ -13,7 +13,10 @@ export default handler.post("/api/session/register",async (req, res) => {
         })
         .then(data => {
             if(data) return res.json({success: true})
-            throw new Error
+            throw new Error("registererror")
+        })
+        .catch(e =>{
+            throw new Error(e)
         })
     });
 

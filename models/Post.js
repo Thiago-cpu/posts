@@ -4,7 +4,6 @@ const postSchema = new mongoose.Schema({
     title: 'string',
     description: 'string',
     likes: Number,
-    dislikes: Number,
     publishedAt: {
         type: Date,
         default: () => new Date(),    
