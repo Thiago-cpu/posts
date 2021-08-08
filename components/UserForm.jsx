@@ -21,7 +21,7 @@ export default function UserForm({btnText = "Enviar", inputs, onSubmit}){
         return true
     },[inputs])
 
-    const handleChange = useCallback((e, onChange) =>{
+    const handleInputChange = useCallback( e =>{
         e.preventDefault()
         const {value, name} = e.target
         setInputValue({...inputValues, [name]: value})
@@ -32,11 +32,11 @@ export default function UserForm({btnText = "Enviar", inputs, onSubmit}){
         return inputs.map((input, i) => {
             const {type, placeholder, name, onChange} = input
             return (<div className={styles.rowInput} key={i}>
-                        <input name={name} className={styles.input} value={inputValues[name] || ""} type={type} onChange={(e)=>{handleChange(e, onChange)}} placeholder={placeholder}/>
+                        <input name={name} className={styles.input} value={inputValues[name] || ""} type={type} onChange={handleInputChange} placeholder={placeholder}/>
                         {inputValues[name] && onChange && <Loading promise={onChange} params={{[name]: inputValues[name]}} spinnerSize = "2rem" spinnerColor = "orange"/>}
                     </div>)
         })
-    },[ handleChange, inputValues])
+    },[ handleInputChange, inputValues])
 
 return(
     <form className={styles.formContainer} onSubmit={handleSubmit}>

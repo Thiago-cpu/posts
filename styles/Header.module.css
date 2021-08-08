@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap');
 .headerContainer{
+    font-family: 'Raleway', sans-serif;
     height: 60px;
     display: flex;
     background-color: var(--header-bg-color);
-    color: var(--font-color);
+    color: var(--font-secundary-color);
     align-items: center;
     flex-direction: row;
     justify-content: space-between;

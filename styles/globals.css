@@ -19,7 +19,8 @@ a {
 }
 :root {
   --header-bg-color: #2f5394;
-  --font-color: #dacaca;
+  --card-bg-color: #2f5394;
+  --font-primary-color: #dacaca;
+  --font-secundary-color: #dacaca;
   --main-bg-color: steelblue;
-
 }

@@ -18,19 +18,25 @@ export default function useFetch({
   params = null,
 }) {
   const [state, dispatch] = useReducer(reducer, {data: null, error: null, isLoading: false});
+  let mounted = true
   const loadData = useCallback(async () => {
+    
     dispatch({type: 'Loading'})
     fetchFn(params)
       .then(res => {
-        dispatch({type: 'onData', payload: res})
+        if(mounted)dispatch({type: 'onData', payload: res})
       })
       .catch(err => {
-        dispatch({type: 'onError', payload: err})
+        if(mounted)dispatch({type: 'onError', payload: err})
       })
-  }, [fetchFn, params])
+  }, [fetchFn, params, mounted])
 
   useEffect(() => {
+    
     if (loadOnMount) loadData();
+    return function cleanup() {
+      mounted = false
+    }
   }, [loadData, loadOnMount]);
 
   return { ...state, loadData };
