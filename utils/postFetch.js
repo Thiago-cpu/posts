@@ -1,4 +1,4 @@
-export default async function postFetch({url, params = undefined, method = 'POST'}){
+export default async function postFetch({url, params = {}, method = 'POST'}){
     return fetch(url,{
             method,
             headers: {
