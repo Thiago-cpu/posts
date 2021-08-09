@@ -1,5 +1,6 @@
 import styles from '../styles/Home.module.css'
 import Post from '../components/Post';
+import PostForm from '../components/PostForm'
 
 const posts = 
 [{
@@ -87,6 +88,8 @@ const posts =
 export default function Home() {
   return (
     <main className={styles.main}>
+      <PostForm/>
+      
       <div className={styles.postContainer}>
       {posts.map((post,i) => {
         return <Post key={i} {...post} ></Post>

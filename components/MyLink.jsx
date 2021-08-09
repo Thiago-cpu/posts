@@ -3,10 +3,9 @@ import { useRouter } from 'next/router'
 import useUser from '../hooks/useUser';
 
 
-export default function MyLink({to, children: text, needLogged = false, needLogout = false}){
-    const {isLogged} = useUser()
+export default function MyLink({to, children: text}){
     const {pathname} = useRouter();
-    if((pathname == to && to != '/') ||( needLogged && !isLogged) || (needLogout && isLogged)) return null
+    if(pathname == to && to != '/') return null
     return <Link href={to}>{text}</Link>
 
 }

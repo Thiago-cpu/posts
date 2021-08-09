@@ -8,8 +8,8 @@ export default function useUser() {
     const login = useCallback(({ username, password }) => {
         return postFetch({ url: '/api/session/login', params: { username, password } })
             .then(res => {
-                window.localStorage.setItem('jwt', 'true')
-                setJwt(true)
+                window.localStorage.setItem('jwt', username)
+                setJwt(username)
                 return res
             })
             .catch(e => {
@@ -47,8 +47,8 @@ export default function useUser() {
             .catch(e => {throw new Error})
 
     }, [])
-
     return {
+        user: jwt,
         isLogged: Boolean(jwt),
         login,
         logout,

@@ -1,4 +1,5 @@
 .main{
+    text-align: center;
     background-color: var(--main-bg-color);
     display: flex;
     flex-direction: column;

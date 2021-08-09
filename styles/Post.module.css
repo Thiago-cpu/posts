@@ -1,5 +1,6 @@
 .post{
     display: flex;
+    width: 300px;
     flex-direction: column;
     align-self: flex-start;
     max-height: 300px;
@@ -10,19 +11,33 @@
     overflow-y: auto;
     overflow-wrap: break-word;
 }
+/* .post [contentEditable=true]:empty:not(:focus):before{
+    content:attr(placeholder)
+} */
 .post > p{
     overflow-y: scroll;
 }
+
 
 .Footer{
     display: flex;
     justify-content: flex-end;
 }
 .Header{
+    position: relative;
     display: flex;
     justify-content: space-evenly;
 }
+.Header > h1 {
+    display: block;
+    width: 225px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: clip;
+}
 .Header > .likes {
+    position: absolute;
+    left: 10px;
     align-self: center;
 }
 .Header > .likes > p{
@@ -34,6 +49,8 @@
     height: 1.2em;
 }
 .Header > .Pin {
+    position: absolute;
+    right: 10px;
     width: 1.5em;
     height: 1.5em;
     margin-top: 10px;
