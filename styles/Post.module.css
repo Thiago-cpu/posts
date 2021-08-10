@@ -30,23 +30,7 @@
     text-overflow: clip;
 }
 
-.Header > .likes {
-    position: absolute;
-    left: 10px;
-    align-self: center;
-}
-
-.Header > .likes > p{
-    margin: 0px;
-    text-align: center;
-}
-
-.Header > .likes > svg{
-    width: 1.2em;
-    height: 1.2em;
-}
-
-.Header > .Pin {
+.Header > .Delete {
     position: absolute;
     right: 10px;
     width: 1.5em;

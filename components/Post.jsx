@@ -1,11 +1,12 @@
 import styles from '../styles/Post.module.css'
-import { FaThumbtack, FaTimes } from "react-icons/fa";
-import { GoTriangleUp, GoTriangleDown } from "react-icons/go"
+import { FaTimes } from "react-icons/fa";
 import useUser from '../hooks/useUser';
 import usePost from '../hooks/usePost';
+import useTimeAgo from '../hooks/useTimeAgo';
 import { useState, useRef, useEffect } from 'react';
 
-export default function Post({likes = 0, title = "",_id: postId, getData = null, description = "", publishedAt = "today", userId}) {
+export default function Post({ title = "",_id: postId, getData = null, description = "", publishedAt = null, userId}) {
+    const timeAgo = useTimeAgo(new Date(publishedAt))
     const {user} = useUser()
     const {updatePost, deletePost} = usePost() 
     const contentEditable = user?.id === userId
@@ -41,21 +42,12 @@ export default function Post({likes = 0, title = "",_id: postId, getData = null,
     return (
         <div ref={$post} className={styles.post}>
             <div className={styles.Header}>
-                <div className={styles.likes}>
-                    <GoTriangleUp/>
-                    <p>{likes}</p>
-                    <GoTriangleDown/>
-                </div>
                 <h1 ref={$title} onBlur={handleBlur} onKeyDown={handleTitleInput} name="title" contentEditable={contentEditable}/>
-                {contentEditable
-                ?<FaTimes onClick={handleDelete} className={styles.Pin} fill="red"/>
-                :<FaThumbtack className={styles.Pin} />
-                }
-                
+                {contentEditable && <FaTimes onClick={handleDelete} className={styles.Delete} fill="red"/>}    
             </div>
             <p ref={$description} onBlur={handleBlur} name="description" contentEditable={contentEditable}/>
             <div className={styles.Footer}>
-                <time dateTime="timeExample">{publishedAt}</time>
+                <time dateTime="timeExample">{timeAgo}</time>
             </div>
         </div>)
 }
