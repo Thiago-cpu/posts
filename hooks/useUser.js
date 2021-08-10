@@ -32,10 +32,12 @@ export default function useUser() {
 
     const logout = useCallback(async () => {
         postFetch({ url: '/api/session/logout' })
-            .then(({ success }) => {
-                if (!success) return
+            .then(data => {
                 setJwt(null)
                 window.localStorage.removeItem('jwt')
+            })
+            .catch(data => {
+                console.log(data)
             })
     }, [setJwt])
 

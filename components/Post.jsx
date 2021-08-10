@@ -2,7 +2,8 @@ import styles from '../styles/Post.module.css'
 import { FaThumbtack} from "react-icons/fa";
 import { GoTriangleUp, GoTriangleDown } from "react-icons/go"
 
-export default function Post({likes = 0, title = "", getData = null, description = "", publishedAt = "today", contentEditable = false}) {
+export default function Post({likes = 0, title = "", getData = null, description = "", publishedAt = "today", userId}) {
+    const contentEditable = false
     return (
         <div className={styles.post}>
             <div className={styles.Header}>
