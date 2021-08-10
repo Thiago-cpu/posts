@@ -22,7 +22,7 @@ export default handler.post("/api/session/login",async (req, res) => {
             maxAge: 60*60*8,
             path: '/'
         }))
-        return res.json({success: true})
+        return res.json({success: true, id: Usuario._id,})
     })
     .catch(e => {
         console.error(e)

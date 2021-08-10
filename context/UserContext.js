@@ -5,7 +5,7 @@ const Context = createContext({})
 export function UserContextProvider({children}){
     const [jwt, setJwt] = useState(null)
     useEffect(()=>{
-        setJwt(window.localStorage.getItem('jwt'))
+        setJwt(JSON.parse(window.localStorage.getItem('jwt')))
     },[])
     
     return <Context.Provider value={{jwt, setJwt}}>

@@ -4,10 +4,8 @@ import postStyles from '../styles/Post.module.css'
 import { FaThumbtack} from "react-icons/fa";
 import { GoTriangleUp, GoTriangleDown } from "react-icons/go"
 import usePost from "../hooks/usePost"
-import Loading from './Loading';
 
-export default function PostForm(){
-    const [clickButton, setClickButton] = useState(false)
+export default function PostForm({loadData}){
     const [values, setValues] = useState({})
     const {createPost} = usePost()
     const $title = useRef(null)
@@ -20,20 +18,18 @@ export default function PostForm(){
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        setClickButton(true)
+        createPost(values)
+        .then(e => {
+            if(loadData) loadData()
+        })
     }
+
     const handleInput = (e) => {
         e.preventDefault()
         const name = e.target.attributes['name'].value
         if(name === 'title' && e.target.innerText.length > 13) return setValues({...values})
         setValues({...values, [name]: e.target.innerText})
-        setClickButton(false)
     }
-    const handleClick = (e) => {
-        e.preventDefault()
-        return <Loading promise={createPost} params={values}/>
-    }
-
 
     return (
     <form className={styles.postForm} onSubmit={handleSubmit}>
@@ -54,9 +50,7 @@ export default function PostForm(){
             </div>
         </div>
         <div className={styles.formFooter}>
-            {clickButton
-            ?<Loading promise={createPost} params={values}/>
-            :<button type="submit">Create Post</button>}
+            <button type="submit">Create Post</button>
         </div>
         
     </form>)
