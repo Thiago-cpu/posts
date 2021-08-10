@@ -7,7 +7,7 @@ export default function usePost(){
     
     const createPost = (postData) =>{
         if (!isLogged) return router.push("/session/login")
-        return postFetch({url: "/api/post/createPost", params: postData})
+        return postFetch({url: "/api/post/crud", params: postData})
         .then(res => {return res})
         .catch (err => {throw new Error(err)})
 
