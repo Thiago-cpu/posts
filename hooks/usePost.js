@@ -8,11 +8,24 @@ export default function usePost(){
     const createPost = (postData) =>{
         if (!isLogged) return router.push("/session/login")
         return postFetch({url: "/api/post/crud", params: postData})
-        .then(res => {return res})
-        .catch (err => {throw new Error(err)})
-
+    }
+    const getMyPost = () =>{
+        return postFetch({url: "/api/post/crud",method:"GET"})
+    }
+    const getAllPost = () =>{
+        return postFetch({url: "/api/post/getAll",method:"GET"})
+    }
+    const deletePost = (postId) => {
+        return postFetch({url: "/api/post/crud",method:"DELETE", params: postId})
+    }
+    const updatePost = ({postId, title, description}) => {
+        return postFetch({url: "/api/post/crud",method:"PUT", params: {postId, title, description}})
     }
     return {
         createPost,
+        getMyPost,
+        getAllPost,
+        deletePost,
+        updatePost,
     }
 }
