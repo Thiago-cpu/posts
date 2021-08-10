@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { formatDate } from "./useDateTimeFormat"
+import  formatDate  from "./useDateTimeFormat"
 
 const isRelativeTimeFormatSupported =
   typeof Intl !== "undefined" && Intl.RelativeTimeFormat

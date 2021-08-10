@@ -2,18 +2,17 @@ import styles from '../styles/Post.module.css'
 import { FaTimes } from "react-icons/fa";
 import useUser from '../hooks/useUser';
 import usePost from '../hooks/usePost';
-import useTimeAgo from '../hooks/useTimeAgo';
 import { useState, useRef, useEffect } from 'react';
+import TimeAgo from './timeAgo';
 
 export default function Post({ title = "",_id: postId, getData = null, description = "", publishedAt = null, userId}) {
-    const timeAgo = useTimeAgo(new Date(publishedAt))
+
     const {user} = useUser()
     const {updatePost, deletePost} = usePost() 
     const contentEditable = user?.id === userId
     const $post = useRef(null)
     const $title = useRef(null)
     const $description = useRef(null)
-
     useEffect(()=>{
         $title.current.textContent = title
         $description.current.textContent = description
@@ -47,7 +46,7 @@ export default function Post({ title = "",_id: postId, getData = null, descripti
             </div>
             <p ref={$description} onBlur={handleBlur} name="description" contentEditable={contentEditable}/>
             <div className={styles.Footer}>
-                <time dateTime="timeExample">{timeAgo}</time>
+                <TimeAgo timestamp={publishedAt}/>
             </div>
         </div>)
 }
