@@ -3,7 +3,7 @@ import { FaTimes } from "react-icons/fa";
 import useUser from '../hooks/useUser';
 import usePost from '../hooks/usePost';
 import { useState, useRef, useEffect } from 'react';
-import TimeAgo from './timeAgo';
+import TimeAgo from './TimeAgo';
 
 export default function Post({ title = "",_id: postId, getData = null, description = "", publishedAt = null, userId}) {
 
